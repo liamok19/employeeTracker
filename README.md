@@ -16,8 +16,8 @@
 ## Strategy 
 | Steps | Instructions | 
 | ------------- |:-------------:| 
-| Installation Requirements: npm i inquirer, dotenv and MySQL | INP |
-| Applying relevant files to gitignore | INP |
+| Installation Requirements: npm i inquirer, dotenv and MySQL | COMPLETED |
+| Applying relevant files to gitignore | COMPLETED |
 | Command prompts user with the following options: view all departments, view all roles, view all employees, add a department, add a role, add an employee, and update an employee role | INP | 
 | WHEN I choose to view all departments. THEN I am presented with a formatted table showing department names and department ids | INP | 
 | WHEN I choose to view all roles. THEN I am presented with the job title, role id, the department that role belongs to, and the salary for that role | INP | 
