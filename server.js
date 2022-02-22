@@ -1,27 +1,15 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-
+require('dotenv').config();
+const connect = require('./db/connect');
 const express = require('express');
 const mysql = require('mysql2');
 
-const PORT = process.env.PORT || 3001;
-const app = express();
+//port might not be required. Commenting out for exercise
+// const PORT = process.env.PORT || 3001;
 
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
 
-// Connect to database
-const db = mysql.createConnection(
-    {
-    host: 'localhost',
-    // MySQL username,
-    user: 'root',
-    // MySQL password - get from .env file or use default
-    password: process.env.DB_PASSWORD || '',
-    database: 'movie_db'
-    },
-    console.log(`Connected to the courses_db database.`)
-);
+
 
 const promptEMS = function () {
     return inquirer.prompt ([
@@ -36,38 +24,61 @@ const promptEMS = function () {
                     'Add a Department', 
                     'Add a role', 
                     'Add an employee', 
-                    'Update and employee Role'
+                    'Update and employee Role',
+                    'Exit',
                 ], 
         }
     ])
-        .then(userChoice => {
+        .then(async (userChoice) => {
             switch (userChoice.list){
                 case 'View all departments': 
-                promptAlldepartments(); //user is directed to this function if they entered.
+                    await promptAlldepartments(); //user is directed to this function if they entered.
                 break
                 case 'View all roles':
-                    promptAllroles(); //user is directed to this function if they entered.
+                    await promptAllroles(); //user is directed to this function if they entered.
                 break
                 case 'View all employees':
-                    promptAllemployees(); //user is directed to this function if they entered.
+                    await promptAllemployees(); //user is directed to this function if they entered.
+                    break;
+                case 'Exit'    :
+                    process.exit(0);
             } 
+            await promptEMS();
+                
         })
 };
 
-const promptAlldepartments = (req, res) => {
-        db.query(`INSERT INTO movies (movie_name) VALUES (?)`, res.body.movie_name,  (err, result) => {
-        if (err) {
-            console.log(err);
-            res.status(500);
-        }
-        res.json({
-            message:'success',
-            data: body
-        })
-        console.log(result);
-        })
-        console.log(promptAlldepartments);
+async function promptAlldepartments () {
+
+    const db = await connect();
+    // console.log(db);
+
+    const [results] = await db.execute(`SELECT * from departments`);
+
+    console.table(results);
+
 }
-console.log(db.query);
+// promptAlldepartments();
+
+async function promptAllroles () {
+
+    const db = await connect();
+    // console.log(db);
+
+    const [results] = await db.execute(`SELECT * from roles`);
+
+    console.table(results);
+
+}async function promptAllemployees () {
+
+    const db = await connect();
+    // console.log(db);
+
+    const [results] = await db.execute(`SELECT * from employee`);
+
+    console.table(results);
+
+}
+
 
 promptEMS();
