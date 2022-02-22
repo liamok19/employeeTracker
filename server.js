@@ -10,18 +10,18 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-// // Connect to database
-// const db = mysql.createConnection(
-//     {
-//     host: 'localhost',
-//     // MySQL username,
-//     user: 'root',
-//     // MySQL password - get from .env file or use default
-//     password: process.env.DB_PASSWORD || '',
-//     database: 'movie_db'
-//     },
-//     console.log(`Connected to the courses_db database.`)
-// );
+// Connect to database
+const db = mysql.createConnection(
+    {
+    host: 'localhost',
+    // MySQL username,
+    user: 'root',
+    // MySQL password - get from .env file or use default
+    password: process.env.DB_PASSWORD || '',
+    database: 'movie_db'
+    },
+    console.log(`Connected to the courses_db database.`)
+);
 
 const promptEMS = function () {
     return inquirer.prompt ([
@@ -30,21 +30,44 @@ const promptEMS = function () {
             type: 'list',
             name: 'list',
             message: '(Required) Your 1 stop shop for the EMS; Emplyer Manager System',
-            choices: ['View all departments', 'View all roles', 'View all employees', 'Add a Department', 'Add a role', 'Add an employee', 'Update and employee Role'], 
+            choices: ['View all departments', 
+                    'View all roles', 
+                    'View all employees', 
+                    'Add a Department', 
+                    'Add a role', 
+                    'Add an employee', 
+                    'Update and employee Role'
+                ], 
         }
     ])
-        // .then(userChoice => {
-        //     switch (userChoice.list){
-        //         case 'Include team member: Engineer': 
-        //         promptEngineer(); //user is directed to this function if they entered.
-        //         break
-        //         case 'Include team member: Intern':
-        //         promptIntern(); //user is directed to this function if they entered.
-        //         break
-        //         case 'Finished team build - select here':
-        //         finishedTeambuild(); //user is directed to this function if they entered to finish the team.
-        //     } 
-        // })
+        .then(userChoice => {
+            switch (userChoice.list){
+                case 'View all departments': 
+                promptAlldepartments(); //user is directed to this function if they entered.
+                break
+                case 'View all roles':
+                    promptAllroles(); //user is directed to this function if they entered.
+                break
+                case 'View all employees':
+                    promptAllemployees(); //user is directed to this function if they entered.
+            } 
+        })
 };
+
+const promptAlldepartments = (req, res) => {
+        db.query(`INSERT INTO movies (movie_name) VALUES (?)`, res.body.movie_name,  (err, result) => {
+        if (err) {
+            console.log(err);
+            res.status(500);
+        }
+        res.json({
+            message:'success',
+            data: body
+        })
+        console.log(result);
+        })
+        console.log(promptAlldepartments);
+}
+console.log(db.query);
 
 promptEMS();
