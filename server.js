@@ -17,7 +17,7 @@ const promptEMS = function () {
         {
             type: 'list',
             name: 'list',
-            message: '(Required) Your 1 stop shop for the EMS; Emplyer Manager System',
+            message: '(Required) Your 1 stop shop for the EMS; Employer Manager System',
             choices: ['View all departments', 
                     'View all roles', 
                     'View all employees', 
