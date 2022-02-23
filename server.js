@@ -89,6 +89,9 @@ async function promptAllemployees () {
 }
 
 async function promptAddDepartment() {
+    const db = await connect();
+    // console.log(db);
+
     return inquirer.prompt ([ 
         {
         type: 'input',
@@ -96,15 +99,18 @@ async function promptAddDepartment() {
         name: 'name',
             validate: nameInput => {
                 if (nameInput){
+                    db.execute(`INTO INTO departments 
+                    (department_name)
+                    VALUES (${nameInput})`
+                    );
                     return true;
                 } else {
                     console.log('You will need to enter a Department, pretty please');
                     return false;
                 }
             }
-        }
+        }    
     ])
-
 }
 
 promptEMS();
