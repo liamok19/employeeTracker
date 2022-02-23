@@ -89,28 +89,64 @@ async function promptAllemployees () {
 }
 
 async function promptAddDepartment() {
-    const db = await connect();
+    // const db = await connect();
     // console.log(db);
 
-    return inquirer.prompt ([ 
-        {
-        type: 'input',
-        message:'(Required) Please enter the new Department into the Employment Management System?', 
-        name: 'name',
-            validate: nameInput => {
-                if (nameInput){
-                    db.execute(`INTO INTO departments 
-                    (department_name)
-                    VALUES (${nameInput})`
-                    );
-                    return true;
-                } else {
-                    console.log('You will need to enter a Department, pretty please');
-                    return false;
-                }
-            }
-        }    
+    // return inquirer.prompt ([ 
+    //     {
+    //     type: 'input',
+    //     message:'(Required) Please enter the new Department into the Employment Management System?', 
+    //     name: 'name',
+    //         validate: nameInput => {
+    //             if (nameInput){
+    //                 // db.execute(`INSERT INTO departments 
+    //                 // (department_name)
+    //                 // VALUES (${nameInput})`
+    //                 // );
+    //                 return true;
+    //             } else {
+    //                 console.log('You will need to enter a Department, pretty please');
+    //                 return false;
+    //             }
+    //         }
+    //     } 
+    // ]);
+
+    inquirer.prompt([
+    {
+        name: "firstName",
+        type: "input",
+        message: "What is the employee's first name?",
+    },
+    {
+        name: "lastName",
+        type: "input",
+        message: "What is the employee's last name?",
+    },
+    {
+        name: "roleID",
+        type: "input",
+        message: "What is the employee's role ID?",
+    },
+    {
+        name: "manID",
+        type: "input",
+        message: "What is your manager ID?",
+    },
     ])
+    .then(function (answer) {
+    var query =
+        "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)";
+    connection.query(
+        query,
+        [answer.firstName, answer.lastName, answer.roleID, answer.manID],
+        function (err, res) {
+        if (err) throw err;
+            console.log(`Successfully Added Employee: ${answer.firstName} ${answer.lastName}`);
+            promptEMS();
+        }
+    );
+    });
 }
 
 promptEMS();
