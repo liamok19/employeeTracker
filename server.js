@@ -39,7 +39,10 @@ const promptEMS = function () {
                 break
                 case 'View all employees':
                     await promptAllemployees(); //user is directed to this function if they entered.
-                    break;
+                break;
+                case 'Add a Department':
+                    await promptAddDepartment();
+                break;
                 case 'Exit'    :
                     process.exit(0);
             } 
@@ -69,7 +72,9 @@ async function promptAllroles () {
 
     console.table(results);
 
-}async function promptAllemployees () {
+}
+
+async function promptAllemployees () {
 
     const db = await connect();
     // console.log(db);
@@ -83,5 +88,23 @@ async function promptAllroles () {
 
 }
 
+async function promptAddDepartment() {
+    return inquirer.prompt ([ 
+        {
+        type: 'input',
+        message:'(Required) Please enter the new Department into the Employment Management System?', 
+        name: 'name',
+            validate: nameInput => {
+                if (nameInput){
+                    return true;
+                } else {
+                    console.log('You will need to enter a Department, pretty please');
+                    return false;
+                }
+            }
+        }
+    ])
+
+}
 
 promptEMS();
