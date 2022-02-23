@@ -53,7 +53,7 @@ async function promptAlldepartments () {
     const db = await connect();
     // console.log(db);
 
-    const [results] = await db.execute(`SELECT * from departments`);
+    const [results] = await db.execute(`SELECT * from departments `);
 
     console.table(results);
 
@@ -74,7 +74,10 @@ async function promptAllroles () {
     const db = await connect();
     // console.log(db);
 
-    const [results] = await db.execute(`SELECT * from employee`);
+    const [results] = await db.execute(`SELECT * 
+                                        FROM employee
+                                        JOIN roles ON employee.role_id = roles.id;`
+    );
 
     console.table(results);
 
