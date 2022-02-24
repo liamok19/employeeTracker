@@ -4,6 +4,7 @@ require('dotenv').config();
 const connect = require('./db/connect');
 const express = require('express');
 const mysql = require('mysql2');
+const { Console } = require('console');
 
 //port might not be required. Commenting out for exercise
 // const PORT = process.env.PORT || 3001;
@@ -93,21 +94,40 @@ async function promptAllemployees () {
 
 async function promptAddDepartment() {
     const db = await connect();
-    // console.log(db);
-
-    await inquirer.prompt ([ 
+        console.log(db);
+    return inquirer.prompt ([ 
         {
             type: 'input',
             message:'(Required) Please enter the new Department into the Employment Management System?', 
             name: 'department_title',
         },
-        ]);
-    // option 1???
-    await (answers => {
-        db.execute(`INSERT INTO departments (department_name)
-                                                VALUES (department_name)`);
-            console.info('Answer:', answers.department_title);
-        });
+        ]).then((answer)=>{
+            // console.log(answer);
+            // console.log(answer.department_title);
+                    let department = answer.department_title;
+                    console.log(department);
+                    db.execute(`INSERT INTO departments (department_name)
+                                                            VALUES ("${department}")`);
+                        console.info('Answer:', answer.department_title);
+                    });
+    };
+    // let dbName = await inquirer.prompt ([ 
+    //     {
+    //         type: 'input',
+    //         message:'(Required) Please enter the new Department into the Employment Management System?', 
+    //         name: 'department_title',
+    //     },
+    //     ]);
+        
+    // // option 1???
+    // await (dbName => {
+    //     console.log(dbName);
+    //     let department_name = dbName.department_title;
+    //     console.log(department_name);
+    //     db.execute(`INSERT INTO departments (department_name)
+    //                                             VALUES (dbName.department_name)`);
+    //         console.info('Answer:', dbName.department_title);
+    //     });
     // option 2???
         //     const [results] = await db.execute(`INSERT INTO departments (department_name)
         //                                         VALUES (department_name)`);
@@ -117,7 +137,7 @@ async function promptAddDepartment() {
         //                                             VALUES (department_name)`);
         //         console.table(results);
         //     // };
-    };
+    // };
 
 // async function promptAddRole() {
 //     const db = await connect();
