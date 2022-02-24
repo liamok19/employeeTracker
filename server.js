@@ -99,17 +99,6 @@ async function promptAddDepartment() {
         name: 'department_name',
         },
         ]);
-    // function (department_name) {
-        // if (department_name) {
-        //     db.execute(`INSERT INTO departments 
-        //         (department_name)
-        //         VALUES (${department_name})`
-        //     );
-        //     return true;
-        // } else {
-        //     console.log('You will need to enter a Department, pretty please');
-        //     return false;
-        // };
         const [results] = await db.execute(`INSERT INTO departments (department_name)
                                             VALUES (department_name)`);
         console.table(results);
