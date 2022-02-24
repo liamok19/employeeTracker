@@ -43,6 +43,9 @@ const promptEMS = function () {
                 case 'Add a Department':
                     await promptAddDepartment();
                 break;
+                case 'Add a Role':
+                    await promptAddRole();
+                break;
                 case 'Exit'    :
                     process.exit(0);
             } 
@@ -105,5 +108,21 @@ async function promptAddDepartment() {
     // };
     };
 
+async function promptAddRole() {
+    const db = await connect();
+    // console.log(db);
+
+    await inquirer.prompt ([ 
+        {
+        type: 'input',
+        message:'(Required) Please enter the new Department into the Employment Management System?', 
+        name: 'department_name',
+        },
+        ]);
+        const [results] = await db.execute(`INSERT INTO departments (department_name)
+                                            VALUES (department_name)`);
+        console.table(results);
+    // };
+};
 
 promptEMS();
