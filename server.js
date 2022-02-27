@@ -9,10 +9,7 @@ const { Console } = require('console');
 //port might not be required. Commenting out for exercise
 // const PORT = process.env.PORT || 3001;
 
-
-
-
-const promptEMS = function () {
+const promptEMS = async function () {
     return inquirer.prompt ([
         //list value so the user can choose between what to add before hitting enter. 
         {
@@ -46,10 +43,10 @@ const promptEMS = function () {
                 break
                 case 'Add Role/s':
                     await promptaddRoles();
-                // break
-                // case 'Add an employee':
-                //     await promptAddEmployee();
-                // break
+                break
+                case 'Add an employee':
+                    await promptAddEmployee();
+                break
                 case 'Exit':
                     process.exit(0);
             } 
@@ -57,6 +54,7 @@ const promptEMS = function () {
                 
         })
 };
+
 
 async function promptAlldepartments () {
 
@@ -68,7 +66,6 @@ async function promptAlldepartments () {
     console.table(results);
 
 }
-// promptAlldepartments();
 
 async function promptAllroles () {
 
@@ -101,17 +98,19 @@ async function promptAddDepartment() {
     return inquirer.prompt ([ 
         {
             type: 'input',
-            message:'(Required) Please enter the new Department into the Employment Management System?', 
+            message:'(Required) Please enter the new Department into the EMS?', 
             name: 'department_title',
         },
         ]).then((answer)=>{
             // console.log(answer);
             // console.log(answer.department_title);
-                    let department = answer.department_title;
+                    // let department = answer.department_title;
                     // console.log(department);
                     db.execute(`INSERT INTO departments (department_name)
-                                                            VALUES ("${department}")`);
+                                                            VALUES (?)`,[answer.department_title]);
                         console.info('Answer:', answer.department_title);
+                        console.log(promptAddDepartment);
+
                     });
 }
 
@@ -123,40 +122,38 @@ async function promptaddRoles() {
     return inquirer.prompt ([ 
         {
             type: 'input',
-            message:'(Required) Please enter the new Role into the Employment Management System?', 
-            name: 'role_title of db:',
+            message:'(Required) Please enter the new Role into the EMS?', 
+            name: 'title',
         },
         {
             type: 'input',
-            message:'(Required) Please enter the "salary" of the new Role into the Employment Management System?', 
-            name: 'roleSalary of db:',
+            message:'(Required) Please enter the "salary" of the new Role into the EMS?', 
+            name: 'salary',
         },
-        ]).then(answer => {
-            console.log(answer);
-            let roletitle = answer.role_title;
-            let roleSalary = answer.role_title;
-            db.execute(`INSERT INTO roles (title, salary)
-                VALUES ("${roletitle}", "${roleSalary}")`);
-                // console.info('Answer:', answer.department_title);
-// });
-            // addValues("db", "role_title, roleSalary", `${roletitle}, ${roleSalary}`);
+        {
+            type: 'input',
+            message:'(Required) Please enter the department ID of the new Role into the EMS?', 
+            name: 'id',
+        },
+        ]).then (answer => {
+            // console.log(answer);
+            // let roletitle = answer.title;
+            // console.log(roletitle);
+            // let roleSalary = answer.salary;
+            // let department_id = answer.id
+            // console.log(roleSalary);
+            db.execute(`INSERT INTO roles (title, salary, department_id)
+                        VALUES (?, ?, ?)`,[answer.title, answer.salary, answer.id]);
+                // console.info('Answer:', answer.title, answer.salary);
+            // console.log(db);
+
         });
-//     // })
-//         // .then((answer)=>{
-//         //     console.log(answer);
-//         //     // console.log(answer.department_title);
-//         //             let newRole = (answer.role_title, answer.roleSalary);
-//         //             // console.log(department);
-//         //             db.execute(`INSERT INTO departments (roles)
-//         //                                                     VALUES ("${newRole}")`);
-//         //                 // console.info('Answer:', answer.department_title);
-//         //             });
-//         // const [results] = await db.execute(`INSERT INTO roles (title, salary)
-//         //                                     VALUES (role_title, roleSalary)`);
-//         // console.table(results);
 }
 
-// async function promptAddEmployee() {
-
-// };
 promptEMS();
+
+
+
+
+
+
