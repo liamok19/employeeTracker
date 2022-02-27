@@ -73,11 +73,11 @@ async function promptAlldepartments () {
 async function promptAllroles () {
 
     const db = await connect();
-    console.log(db);
+    // console.log(db);
 
-    // const [results] = await db.execute(`SELECT * from roles`);
+    const [results] = await db.execute(`SELECT * from roles`);
 
-    // console.table(results);
+    console.table(results);
 
 }
 
@@ -118,25 +118,29 @@ async function promptAddDepartment() {
 async function promptaddRoles() {
 
     const db = await connect();
-    console.log(db);
+    // console.log(db);
 
-// //     return inquirer.prompt ([ 
-// //         {
-// //             type: 'input',
-// //             message:'(Required) Please enter the new Role into the Employment Management System?', 
-// //             name: 'role_title of db:',
-// //         },
-// //         {
-// //             type: 'input',
-// //             message:'(Required) Please enter the "salary" of the new Role into the Employment Management System?', 
-// //             name: 'roleSalary of db:',
-// //         },
-// //         ]).then(answer => {
-// //             console.log(answer);
-// //             let roletitle = answer.role_title;
-// //             let roleSalary = answer.role_title;
-// //             addValues("db", "role_title, roleSalary", `${roletitle}, ${roleSalary}`);
-// // });
+    return inquirer.prompt ([ 
+        {
+            type: 'input',
+            message:'(Required) Please enter the new Role into the Employment Management System?', 
+            name: 'role_title of db:',
+        },
+        {
+            type: 'input',
+            message:'(Required) Please enter the "salary" of the new Role into the Employment Management System?', 
+            name: 'roleSalary of db:',
+        },
+        ]).then(answer => {
+            console.log(answer);
+            let roletitle = answer.role_title;
+            let roleSalary = answer.role_title;
+            db.execute(`INSERT INTO roles (title, salary)
+                VALUES ("${roletitle}", "${roleSalary}")`);
+                // console.info('Answer:', answer.department_title);
+// });
+            // addValues("db", "role_title, roleSalary", `${roletitle}, ${roleSalary}`);
+        });
 //     // })
 //         // .then((answer)=>{
 //         //     console.log(answer);
