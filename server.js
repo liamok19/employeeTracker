@@ -150,6 +150,38 @@ async function promptaddRoles() {
         });
 }
 
+async function promptAddEmployee() {
+
+    const db = await connect();
+    // console.log(db);
+
+    return inquirer.prompt ([ 
+        {
+            type: 'input',
+            message:'(Required) Please enter the First Name of the employee?', 
+            name: 'f_name',
+        },
+        {
+            type: 'input',
+            message:'(Required) Please enter the Last Name of the employee?', 
+            name: 'l_name',
+        },
+        {
+            type: 'input',
+            message:'(Required) Please enter the Role ID of the employee?', 
+            name: 'roleid',
+        },        
+        {
+            type: 'input',
+            message:'(Required) Please enter the Manager responsible for this employee?', 
+            name: 'managerid',
+        },
+        ]).then (answer => {
+            db.execute(`INSERT INTO employee (role_id, first_name, last_name, manager_id )
+                        VALUES (?, ?, ?, ?)`,[answer.roleid, answer.f_name, answer.l_name, answer.managerid]);
+
+        });
+}
 promptEMS();
 
 
