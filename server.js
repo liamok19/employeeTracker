@@ -10,19 +10,39 @@ const { Console } = require('console');
 // const PORT = process.env.PORT || 3001;
 
 const promptEMS = async function () {
+    console.log(`
+    ✨✨✨✨                                                    ✨✨✨✨
+    _______  __   __  _______  ___      _______  __   __  _______  _______   
+    |       ||  |_|  ||       ||   |    |       ||  | |  ||       ||       |  
+    |   |___ |       ||   |_| ||   |    |  | |  ||       ||   |___ |   |___   
+    |    ___||       ||    ___||   |___ |  |_|  ||_     _||    ___||    ___|  
+    |   |___ | ||_|| ||   |    |       ||       |  |   |  |   |___ |   |___   
+    |_______||_|   |_||___|    |_______||_______|  |___|  |_______||_______|  
+                                
+                                    ✨✨✨✨ 
+    ______   _______  _______  _______  _______  _______  _______  _______   
+    |      | |   _   ||       ||   _   ||  _    ||   _   ||       ||       |  
+    |  _    ||  |_|  ||_     _||  |_|  || |_|   ||  |_|  ||  _____||    ___|  
+    | | |   ||       |  |   |  |       ||       ||       || |_____ |   |___   
+    | |_|   ||       |  |   |  |       ||  _   | |       ||_____  ||    ___|  
+    |       ||   _   |  |   |  |   _   || |_|   ||   _   | _____| ||   |___   
+    |______| |__| |__|  |___|  |__| |__||_______||__| |__||_______||_______|     
+    ✨✨✨✨                                                    ✨✨✨✨
+    `)
+    
     return inquirer.prompt ([
         //list value so the user can choose between what to add before hitting enter. 
         {
             type: 'list',
             name: 'list',
             message: '(Required) Your 1 stop shop for the EMS; Employer Manager System',
-            choices: ['View all departments', 
+            choices:['View all departments', 
                     'View all roles', 
                     'View all employees', 
                     'Add a Department', 
                     'Add Role/s', 
                     'Add an employee', 
-                    'Update and employee Role',
+                    'Update an Employees Role',
                     'Exit',
                 ], 
         }
@@ -47,6 +67,12 @@ const promptEMS = async function () {
                 case 'Add an employee':
                     await promptAddEmployee();
                 break
+                case 'Add an employee':
+                    await promptAddEmployee();
+                break
+                case 'Update an Employees Role':
+                    await updateEmployeeRole();
+                break    
                 case 'Exit':
                     process.exit(0);
             } 
@@ -182,6 +208,22 @@ async function promptAddEmployee() {
 
         });
 }
+
+async function updateEmployeeRole() {
+    const db = await connect();
+    // console.log(db);
+
+    return inquirer.prompt ([ 
+        {
+            type: 'rawlist',
+            message:'(Required) Please enter the First Name of the employee?', 
+            name: 'choices',
+            choices: (`SELECT * FROM employee`),
+        },
+    ])
+
+}
+
 promptEMS();
 
 
