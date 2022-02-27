@@ -5,6 +5,7 @@ const connect = require('./db/connect');
 const express = require('express');
 const mysql = require('mysql2');
 const { Console } = require('console');
+const { type } = require('express/lib/response');
 
 //port might not be required. Commenting out for exercise
 // const PORT = process.env.PORT || 3001;
@@ -218,19 +219,40 @@ async function updateEmployeeRole() {
 
     const db = await connect();
     // console.log(db);
+        // SELECT role_id, first_name, last_name
+        // FROM ems_db
+        // WHERE 
     //3. inquiry prompt choices of all the current employees in the database.
 
     return inquirer.prompt ([ 
         {
-            type: 'rawlist',
+            type: 'list',
             message:'(Required) Please enter the First Name of the employee?', 
             name: 'choices',
-            choices: (`SELECT * FROM employee`),
+            choices: (promptAllemployees(`SELECT * 
+            FROM employee
+            JOIN roles ON employee.role_id = roles.id;`)),
         },
     ])
     //4. once use selects what employee to update then an inquireprompt runs through the column fields the user wants to update.
+    // return inquirer.prompt ([
+    //     type: 'list',
 
-    // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
+    // ])
+    //     // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
+
+    .then (answer => {
+        db.execute(`UPDATE  
+                        employee 
+                    SET
+                        role_id = roleisUpdate,
+                        first_name = f_nameUpdate, 
+                        last_name = l_nameUpdate,
+                        manager_id = manageridUpdate, 
+                    WHERE 
+                        
+                    (role_id, first_name, last_name, manager_id )
+                    VALUES (?, ?, ?, ?)`,[answer.roleidUpdate, answer.f_nameUpdate, answer.l_nameUpdate, answer.manageridUpdate]);
 
 }
 
