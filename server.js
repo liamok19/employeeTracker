@@ -34,19 +34,22 @@ const promptEMS = function () {
             switch (userChoice.list){
                 case 'View all departments': 
                     await promptAlldepartments(); //user is directed to this function if they entered.
-                break
+                // break
                 case 'View all roles':
                     await promptAllroles(); //user is directed to this function if they entered.
-                break
+                // break
                 case 'View all employees':
                     await promptAllemployees(); //user is directed to this function if they entered.
-                break;
+                // break
                 case 'Add a Department':
                     await promptAddDepartment();
-                break;
+                // break
                 case 'Add a Role':
-                    await promptAddRole();
-                break;
+                    await promptAddRoles();
+                // break
+                case 'Add an employee':
+                    await promptAddEmployee();
+                // break
                 case 'Exit'    :
                     process.exit(0);
             } 
@@ -94,7 +97,7 @@ async function promptAllemployees () {
 
 async function promptAddDepartment() {
     const db = await connect();
-        console.log(db);
+        // console.log(db);
     return inquirer.prompt ([ 
         {
             type: 'input',
@@ -105,60 +108,50 @@ async function promptAddDepartment() {
             // console.log(answer);
             // console.log(answer.department_title);
                     let department = answer.department_title;
-                    console.log(department);
+                    // console.log(department);
                     db.execute(`INSERT INTO departments (department_name)
                                                             VALUES ("${department}")`);
                         console.info('Answer:', answer.department_title);
                     });
-    };
-    // let dbName = await inquirer.prompt ([ 
-    //     {
-    //         type: 'input',
-    //         message:'(Required) Please enter the new Department into the Employment Management System?', 
-    //         name: 'department_title',
-    //     },
-    //     ]);
-        
-    // // option 1???
-    // await (dbName => {
-    //     console.log(dbName);
-    //     let department_name = dbName.department_title;
-    //     console.log(department_name);
-    //     db.execute(`INSERT INTO departments (department_name)
-    //                                             VALUES (dbName.department_name)`);
-    //         console.info('Answer:', dbName.department_title);
-    //     });
-    // option 2???
-        //     const [results] = await db.execute(`INSERT INTO departments (department_name)
-        //                                         VALUES (department_name)`);
-        //     console.table(results.department_name);
-    // option 3???
-        //     const [results] = await db.execute(`INSERT INTO roles (title, salary)
-        //                                             VALUES (department_name)`);
-        //         console.table(results);
-        //     // };
-    // };
+}
 
-// async function promptAddRole() {
-//     const db = await connect();
-//     // console.log(db);
+async function promptAddRoles() {
+    const db = await connect();
+    // console.log(db);
 
-//     await inquirer.prompt ([ 
-//         {
-//             type: 'input',
-//             message:'(Required) Please enter the new Role into the Employment Management System?', 
-//             name: 'role_title',
-//         },
-//         {
-//             type: 'input',
-//             message:'(Required) Please enter the "salary" of the new Role into the Employment Management System?', 
-//             name: 'roleSalary',
-//         },
-//         ]);
-//         const [results] = await db.execute(`INSERT INTO roles (title, salary)
-//                                             VALUES (role_title, roleSalary)`);
-//         console.table(results);
-//     // };
-// }; console.log(promptAddRole);
+    return inquirer.prompt ([ 
+        {
+            type: 'input',
+            message:'(Required) Please enter the new Role into the Employment Management System?', 
+            name: 'role_title of db:',
+        },
+        {
+            type: 'input',
+            message:'(Required) Please enter the "salary" of the new Role into the Employment Management System?', 
+            name: 'roleSalary of db:',
+        },
+        ]).then(answer => {
+            console.log(answer);
+            let roletitle = answer.role_title;
+            let roleSalary = answer.role_title;
+            addValues("db", "role_title, roleSalary", `${roletitle}, ${roleSalary}`);
+});
+    // })
+        // .then((answer)=>{
+        //     console.log(answer);
+        //     // console.log(answer.department_title);
+        //             let newRole = (answer.role_title, answer.roleSalary);
+        //             // console.log(department);
+        //             db.execute(`INSERT INTO departments (roles)
+        //                                                     VALUES ("${newRole}")`);
+        //                 // console.info('Answer:', answer.department_title);
+        //             });
+        // const [results] = await db.execute(`INSERT INTO roles (title, salary)
+        //                                     VALUES (role_title, roleSalary)`);
+        // console.table(results);
+};
 
+// async function promptAddEmployee() {
+
+// };
 promptEMS();
