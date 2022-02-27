@@ -81,7 +81,7 @@ const promptEMS = async function () {
         })
 };
 
-
+// VIEW all the tables from the database section (Departments, Roles and Employees)
 async function promptAlldepartments () {
 
     const db = await connect();
@@ -117,6 +117,7 @@ async function promptAllemployees () {
     console.table(results);
 
 }
+//ADD to the EMS section (Departments, Roles and Employees)
 
 async function promptAddDepartment() {
     const db = await connect();
@@ -209,9 +210,15 @@ async function promptAddEmployee() {
         });
 }
 
+// UPDATE Employee section
+//1. async function thats been called by a prompt windows().
+
 async function updateEmployeeRole() {
+    //2. connect to database.
+
     const db = await connect();
     // console.log(db);
+    //3. inquiry prompt choices of all the current employees in the database.
 
     return inquirer.prompt ([ 
         {
@@ -221,6 +228,9 @@ async function updateEmployeeRole() {
             choices: (`SELECT * FROM employee`),
         },
     ])
+    //4. once use selects what employee to update then an inquireprompt runs through the column fields the user wants to update.
+
+    // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
 
 }
 
