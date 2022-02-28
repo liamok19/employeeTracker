@@ -226,15 +226,22 @@ async function updateEmployeeRole() {
     );
 
     console.table(results);
-//     // inquirer
-//     //     .prompt([
-//     //     {
-//     //         type: "list",
-//     //         message: "Select an an employee:",
-//     //         name: "employee",
-//     //         choices: results,
-//     //     },
-//     //     ])
+    return inquirer.prompt([
+        {
+            type: "list",
+            message: "Select an an employee:",
+            name: "employee",
+            choices: [ 
+                    'Mike Chan',
+                    'Ashley Rodriguez',
+                    'Kevin Tupik',
+                    'Kunal Singh',
+                    'Malia Brown',
+                    'Sarah Lourd',
+                    'Tom Allen', 
+                ],
+            },
+        ])
 
     //3. inquiry prompt choices of all the current employees in the database.
 
