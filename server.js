@@ -226,33 +226,38 @@ updateEmployeeRole = async () => {
 
     // console.log(results);
     const empList = [];
-    console.log(empList);
+    // console.log(empList);
     const db = await connect();
-        console.log(db);
+    // console.log(db);
 
-    // db.query("SELECT * from employee", (err, result) => {
+    // db.execute(`SELECT * FROM employee`, (err, res) => {
     //     if (err) {
     //     console.log(err);
     //     } else {
-    //     for (let i = 0; i < result.length; i++) {
-    //         empList.push(result[i].first_name + " " + result[i].last_name);
+    //     for (let i = 0; i < res.length; i++) {
+    //         empList.push(res[i].first_name + " " + res[i].last_name);
     //     }
-//     }
+    // }
+    const [results] = await db.execute(`SELECT * 
+                                        FROM employee
+                                        JOIN roles ON employee.role_id = roles.id;`
+    );
 
-//     inquirer
-//         .prompt([
-//         {
-//             type: "list",
-//             message: "Select an an employee:",
-//             name: "employee",
-//             choices: empList,
-//         },
-//         ])
+    // console.table(results);
+    inquirer
+        .prompt([
+        {
+            type: "list",
+            message: "Select an an employee:",
+            name: "employee",
+            choices: results,
+        },
+        ])
 
 
 
 
-//     });
+    // });
 }
 
 //         inquirer
