@@ -213,126 +213,37 @@ async function promptAddEmployee() {
 
 // UPDATE Employee section
 //1. async function thats been called by a prompt windows().
-
-updateEmployeeRole = async () => {
-    //2. connect to database.
-
-    // const db = await connect();
-    // console.log(db);
-
-    // const [results] = await db.execute(`SELECT DISTINCT role_id, first_name,last_name
-    //                                     FROM employee;`
-    // );
-
-    // console.log(results);
-    const empList = [];
-    // console.log(empList);
+async function updateEmployeeRole() {
+//     //2. connect to database.
+//     const empList = [];
+//     // console.log(empList);
     const db = await connect();
-    // console.log(db);
+//     // console.log(db);
 
-    // db.execute(`SELECT * FROM employee`, (err, res) => {
-    //     if (err) {
-    //     console.log(err);
-    //     } else {
-    //     for (let i = 0; i < res.length; i++) {
-    //         empList.push(res[i].first_name + " " + res[i].last_name);
-    //     }
-    // }
     const [results] = await db.execute(`SELECT * 
                                         FROM employee
                                         JOIN roles ON employee.role_id = roles.id;`
     );
 
-    // console.table(results);
-    inquirer
-        .prompt([
-        {
-            type: "list",
-            message: "Select an an employee:",
-            name: "employee",
-            choices: results,
-        },
-        ])
-
-
-
-
-    // });
-}
-
-//         inquirer
-//         .prompt([
-//         {
-//             name: "choice",
-//             type: "rawlist",
-//             message: "Which employee's role would you like to update?",
-//             choices: function() {
-//             let choiceArray = [];
-//                 for (let i=1; i < results.length; i++) {
-//                 let emp = ""; 
-//                 emp = `${results[i].id} ${results[i].first_name} ${results[i].last_name} ${results[i].roles_id}`
-//                 choiceArray.push(emp)
-//             }
-//             return choiceArray;
-//             }
-//         },
-//         {
-//             name: "roleUpdate",
-//             type: "list",
-//             message: "What role would you like to update this employee's role to?",
-//             choices: ['Salesperson', 'Lead Engineer', 'Software Engineer', 'Account Manager', 'Accountant', 'Legal Team Lead','Lawyer']        
-//         }
-//         ])
-//         .then(function(answer) {
-//         updateToChosenRole(answer);
-//         return answer;
-//         })
-//     })  
-//     }
-
-
-
-
-// function updateToChosenRole(answer) {
-//     console.log('next step');
-// }
-
-
-
+    console.table(results);
+//     // inquirer
+//     //     .prompt([
+//     //     {
+//     //         type: "list",
+//     //         message: "Select an an employee:",
+//     //         name: "employee",
+//     //         choices: results,
+//     //     },
+//     //     ])
 
     //3. inquiry prompt choices of all the current employees in the database.
 
-    // return inquirer.prompt ([ 
-    //     {
-    //         type: 'list',
-    //         message:'(Required) Please enter the First Name of the employee?', 
-    //         name: 'choices',
-    //         choices: filter() {
-    //             return (results);
-    //         }
-    //     },
-    // ])
     //4. once use selects what employee to update then an inquireprompt runs through the column fields the user wants to update.
-    // return inquirer.prompt ([
-    //     type: 'list',
 
-    // ])
-    //     // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
+    // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
 
-    // .then (answer => {
-    //     db.execute(`UPDATE  
-    //                     employee 
-    //                 SET
-    //                     role_id = roleisUpdate,
-    //                     first_name = f_nameUpdate, 
-    //                     last_name = l_nameUpdate,
-    //                     manager_id = manageridUpdate, 
-    //                 WHERE 
-                        
-    //                 (role_id, first_name, last_name, manager_id )
-    //                 VALUES (?, ?, ?, ?)`,[answer.roleidUpdate, answer.f_nameUpdate, answer.l_nameUpdate, answer.manageridUpdate]);
+};
 
-// }
 
 promptEMS();
 
