@@ -214,7 +214,7 @@ async function promptAddEmployee() {
 // UPDATE Employee section
 //1. async function thats been called by a prompt windows().
 
-async function updateEmployeeRole() {
+updateEmployeeRole = async () => {
     //2. connect to database.
 
     // const db = await connect();
@@ -228,27 +228,32 @@ async function updateEmployeeRole() {
     const empList = [];
     console.log(empList);
     const db = await connect();
-    db.query("SELECT * from employee", (err, result) => {
-        if (err) {
-        console.log(err);
-        } else {
-        for (let i = 0; i < result.length; i++) {
-            empList.push(result[i].first_name + " " + result[i].last_name);
-        }
-    }
-    console.log(empList);
+        console.log(db);
 
-    inquirer
-        .prompt([
-        {
-            type: "list",
-            message: "Select an an employee:",
-            name: "employee",
-            choices: empList,
-        },
-        ])
-        });
-    }
+    // db.query("SELECT * from employee", (err, result) => {
+    //     if (err) {
+    //     console.log(err);
+    //     } else {
+    //     for (let i = 0; i < result.length; i++) {
+    //         empList.push(result[i].first_name + " " + result[i].last_name);
+    //     }
+//     }
+
+//     inquirer
+//         .prompt([
+//         {
+//             type: "list",
+//             message: "Select an an employee:",
+//             name: "employee",
+//             choices: empList,
+//         },
+//         ])
+
+
+
+
+//     });
+}
 
 //         inquirer
 //         .prompt([
