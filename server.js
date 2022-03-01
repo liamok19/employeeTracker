@@ -220,34 +220,57 @@ async function updateEmployeeRole() {
     const db = await connect();
 //     // console.log(db);
 
-    const [results] = await db.execute(`SELECT * 
+    const [employees] = await db.execute(`SELECT * 
                                         FROM employee
                                         JOIN roles ON employee.role_id = roles.id;`
     );
 
-    console.table(results);
+    const [roles] = await db.execute(`SELECT * FROM roles`);
+
+    // dept id
+
+    // role id 
+    // 1. show a list of employee names
+
+    // once selected: show all the roles available, regardless of dept
+    
     return inquirer.prompt([
         {
             type: "list",
             message: "Select an an employee:",
             name: "employee",
-            choices: [ 
-                    'Mike Chan',
-                    'Ashley Rodriguez',
-                    'Kevin Tupik',
-                    'Kunal Singh',
-                    'Malia Brown',
-                    'Sarah Lourd',
-                    'Tom Allen', 
-                ],
-            },
-        ])
+            choices: employees.map((employee) => { 
+                return {
+                    name: employee.first_name + ' ' + employee.last_name,
+                    value: employee.id
+                };
+            })
+                
+        },
+        
+        {
+            type: "list",
+            message: "Select an an role",
+            name: "role",
+            choices: roles.map((role) => { 
+                return {
+                    name: role.title,
+                    value: role.id
+                };
+            })
+                
+        },
+        ]).then((res) => {
+            console.log(res);
+                //3. perfom the update
+            return db.execute("UPDATE employee SET `role_id` = ? WHERE (`id` = ?)", [res.role, res.employee]);
 
+        })
     //3. inquiry prompt choices of all the current employees in the database.
 
     //4. once use selects what employee to update then an inquireprompt runs through the column fields the user wants to update.
 
-    // 5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
+    //5. db-execute (UPDATE employee (column_names) (?etc) [answer.type_name]
 
 };
 
