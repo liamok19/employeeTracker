@@ -26,11 +26,11 @@
 | WHEN I choose to add a department. THEN I am prompted to enter the name of the department and that department is added to the database | COMPLETED | 
 | WHEN I choose to add a role. THEN I am prompted to enter the name, salary, and department for the role and that role is added to the database | COMPLETED | 
 | WHEN I choose to add an employee. THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database | COMPLETED | 
-|WHEN I choose to update an employee role. THEN I am prompted to select an employee to update and their new role and this information is updated in the database | INP |
+|WHEN I choose to update an employee role. THEN I am prompted to select an employee to update and their new role and this information is updated in the database | COMPLETED |
 
 ## Final Look
 # Usage
-<img src='./public/assets/images/noteTaker.gif' alt="EMS_mySQL" >
+<img src='./public/images/liamoemployeetracker.gif' alt="EMS_mySQL" >
 
 ## License
 This project is available under the MIT license. Visit [License: MIT](https://opensource.org/licenses/MIT) for full license text
